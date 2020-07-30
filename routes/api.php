@@ -17,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/users', 'API\AuthController@register');
+Route::post('/login','API\AuthController@login')->name('login');
+
+Route::middleware('auth:api')->post('/wallets','WalletController@create');
+Route::middleware('auth:api')->get('/wallets/{address}', 'WalletController@show');
+Route::middleware('auth:api')->get('/wallets/{address}/transactions', 'TransactionController@searchByWallet');
+
+Route::middleware('auth:api')->post('/transactions', 'TransactionController@create');
+Route::middleware('auth:api')->get('/transactions', 'TransactionController@searchByUser');
+
